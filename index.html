@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+  Сыни және аналитикалық ойлау
+</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1e40af;
+  --primary-light: #dbeafe;
+
+  --background: #f3f6fb;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #667085;
+  --border: #d7deea;
+
+  --correct: #15803d;
+  --correct-background: #dcfce7;
+
+  --wrong: #b91c1c;
+  --wrong-background: #fee2e2;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.55;
+}
+
+header {
+  padding: 34px 16px 58px;
+  background:
+    linear-gradient(
+      135deg,
+      #1d4ed8,
+      #3b82f6
+    );
+  color: white;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0 0 10px;
+  font-size: 34px;
+  line-height: 1.2;
+}
+
+header p {
+  margin: 0;
+  font-size: 17px;
+  opacity: 0.95;
+}
+
+.container {
+  width: min(
+    960px,
+    calc(100% - 24px)
+  );
+  margin: -32px auto 55px;
+}
+  .section-navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 16px;
+  margin-bottom: 18px;
+  background: white;
+  border-radius: 17px;
+  box-shadow:
+    0 5px 20px
+    rgba(31, 41, 55, 0.09);
+}
+
+.section-button {
+  border: 2px solid var(--border);
+  border-radius: 13px;
+  padding: 16px 12px;
+  background: #f8fafc;
+  color: #344054;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.section-button.active {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: white;
+}
+
+.section-button.locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.test-section {
+  display: none;
+}
+
+.test-section.active {
+  display: block;
+}
+
+.section-header {
+  padding: 22px;
+  margin-bottom: 15px;
+  background: white;
+  border-radius: 17px;
+  box-shadow:
+    0 5px 20px
+    rgba(31, 41, 55, 0.08);
+}
+
+.section-header h2 {
+  margin: 0 0 7px;
+  color: var(--primary);
+  font-size: 28px;
+}
+
+.section-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.section-information {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 13px;
+}
+
+.information-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.progress-card {
+  padding: 16px 18px;
+  margin-bottom: 15px;
+  background: white;
+  border-radius: 15px;
+  box-shadow:
+    0 4px 18px
+    rgba(31, 41, 55, 0.07);
+}
+
+.progress-information {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+  color: var(--muted);
+}
+
+.progress-information strong {
+  color: var(--primary);
+}
+
+.progress-line {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #dce4f0;
+}
+
+.progress-line span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--primary);
+  transition: width 0.25s;
+}
+
+  .question {
+  padding: 21px;
+  margin-bottom: 15px;
+  background: var(--card);
+  border: 1px solid #dce3ee;
+  border-radius: 16px;
+  box-shadow:
+    0 4px 17px
+    rgba(31, 41, 55, 0.06);
+}
+
+.question-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 35px;
+  margin-bottom: 12px;
+  padding: 0 11px;
+  border-radius: 10px;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  font-weight: 900;
+}
+
+.question-title {
+  margin: 0 0 16px;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.math {
+  font-family:
+    "Times New Roman",
+    Georgia,
+    serif;
+  font-size: 21px;
+}
+
+.visual-box {
+  margin: 5px 0 18px;
+  padding: 14px;
+  overflow-x: auto;
+  border: 1px solid #dce3ee;
+  border-radius: 14px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.visual-box svg {
+  display: block;
+  width: min(100%, 620px);
+  height: auto;
+  margin: 0 auto;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 5px 0 18px;
+  overflow: hidden;
+  border: 1.5px solid #475569;
+  border-radius: 8px;
+}
+
+.comparison-cell {
+  min-height: 110px;
+  padding: 14px;
+  font-family:
+    "Times New Roman",
+    Georgia,
+    serif;
+  font-size: 19px;
+}
+
+.comparison-cell + .comparison-cell {
+  border-left: 1.5px solid #475569;
+}
+
+.comparison-title {
+  display: block;
+  margin-bottom: 9px;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+  font-weight: 900;
+}
+
+.options {
+  display: grid;
+  gap: 9px;
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: 0.18s;
+}
+
+.option:hover {
+  border-color: #93b4f6;
+  background: #f8fbff;
+}
+
+.option input {
+  flex: 0 0 auto;
+  margin-top: 4px;
+  transform: scale(1.15);
+  accent-color: var(--primary);
+}
+
+.option-letter {
+  flex: 0 0 27px;
+  color: #475467;
+  font-weight: 900;
+}
+  .option.correct {
+  border-color: #22c55e;
+  background: var(--correct-background);
+  color: #166534;
+}
+
+.option.wrong {
+  border-color: #ef4444;
+  background: var(--wrong-background);
+  color: #991b1b;
+}
+
+.explanation {
+  display: none;
+  margin-top: 17px;
+  padding-top: 16px;
+  border-top: 1px solid #e4e7ec;
+}
+
+.question.checked .explanation {
+  display: block;
+}
+
+.question-score {
+  margin-bottom: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  font-weight: 900;
+}
+
+.question-score.full {
+  background: var(--correct-background);
+  color: #166534;
+}
+
+.question-score.zero {
+  background: var(--wrong-background);
+  color: #991b1b;
+}
+
+.correct-answer {
+  padding: 12px 14px;
+  border-radius: 11px;
+  background: var(--correct-background);
+  color: #166534;
+  font-weight: 800;
+}
+
+.explanation-title {
+  margin: 14px 0 7px;
+  color: var(--primary-dark);
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.explanation-text {
+  margin: 0;
+  padding: 13px 14px;
+  border-radius: 11px;
+  background: #f7faff;
+}
+
+.key-fact {
+  margin-top: 11px;
+  padding: 12px 14px;
+  border-left: 5px solid var(--primary);
+  border-radius: 8px;
+  background: var(--primary-light);
+  font-weight: 750;
+}
+  .result-card {
+  display: none;
+  padding: 24px;
+  margin: 18px 0;
+  border-radius: 16px;
+  background: white;
+  text-align: center;
+  box-shadow:
+    0 4px 18px
+    rgba(31, 41, 55, 0.08);
+}
+
+.result-card.show {
+  display: block;
+}
+
+.result-card h3 {
+  margin: 0 0 8px;
+  color: var(--primary);
+}
+
+.score {
+  margin: 5px 0;
+  color: var(--primary);
+  font-size: 39px;
+  font-weight: 900;
+}
+
+.actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  gap: 10px;
+  padding: 13px 0 17px;
+  background:
+    rgba(243, 246, 251, 0.95);
+  backdrop-filter: blur(9px);
+}
+
+.actions button {
+  border: none;
+  border-radius: 12px;
+  padding: 15px 17px;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.show-result-button {
+  flex: 1;
+  background: var(--primary);
+  color: white;
+}
+
+.reset-button {
+  background: #e5e7eb;
+  color: #1f2937;
+}
+
+@media (max-width: 650px) {
+  header h1 {
+    font-size: 27px;
+  }
+
+  .section-navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    padding: 17px 15px;
+  }
+
+  .question-title {
+    font-size: 17px;
+  }
+
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-cell + .comparison-cell {
+    border-top: 1.5px solid #475569;
+    border-left: none;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>
+    Сыни және аналитикалық ойлау
+  </h1>
+
+  <p>
+    Кешенді тестілеуге дайындық
+  </p>
+</header>
+
+<main class="container">
+
+  <nav class="section-navigation">
+
+    <button
+      type="button"
+      id="criticalTab"
+      class="section-button active"
+    >
+      Сыни ойлау
+    </button>
+
+    <button
+      type="button"
+      id="analyticalTab"
+      class="section-button locked"
+      disabled
+    >
+      Аналитикалық ойлау
+    </button>
+
+  </nav>
+
+  <section
+    id="criticalSection"
+    class="test-section active"
+  >
+
+    <div class="section-header">
+
+      <h2>
+        Сыни ойлау
+      </h2>
+
+      <p>
+        15 сұрақ. Әр сұрақта бір дұрыс жауап бар.
+        Әр дұрыс жауапқа 1 балл беріледі.
+      </p>
+
+      <div class="section-information">
+
+        <span class="information-badge">
+          15 сұрақ
+        </span>
+
+        <span class="information-badge">
+          Ең жоғары балл: 15
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="progress-card">
+
+      <div class="progress-information">
+
+        <span>
+          Жауап беру барысы
+        </span>
+
+        <strong id="criticalProgressText">
+          0 / 15
+        </strong>
+
+      </div>
+
+      <div class="progress-line">
+        <span id="criticalProgressBar"></span>
+      </div>
+
+    </div>
+        <div
+      id="criticalResult"
+      class="result-card"
+    >
+
+      <h3>
+        Сыни ойлау нәтижесі
+      </h3>
+
+      <div
+        id="criticalScore"
+        class="score"
+      >
+        0 / 15
+      </div>
+
+    </div>
+
+    <div id="criticalQuiz"></div>
+
+    <div class="actions">
+
+      <button
+        type="button"
+        class="reset-button"
+        onclick="resetCriticalTest()"
+      >
+        Қайта бастау
+      </button>
+
+      <button
+        type="button"
+        class="show-result-button"
+        onclick="showCriticalResults()"
+      >
+        Нәтижені көрсету
+      </button>
+
+    </div>
+
+  </section>
+
+<script>
+const letters = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E"
+];
+
+const criticalQuestions = [
+    {
+    number: 1,
+
+    question:
+      "A және B шамаларын салыстырыңыз.",
+
+    visual: `
+      <div class="comparison-grid">
+
+        <div class="comparison-cell">
+
+          <span class="comparison-title">
+            A шамасы
+          </span>
+
+          <div class="math">
+            y бұрышының мәні
+          </div>
+
+          <div>
+            m және n түзулері параллель
+          </div>
+
+        </div>
+
+        <div class="comparison-cell">
+
+          <span class="comparison-title">
+            B шамасы
+          </span>
+
+          <div class="math">
+            (7x + 560) / 6 = 150
+          </div>
+
+          <div>
+            теңдеуінің шешімі
+          </div>
+
+        </div>
+
+      </div>
+    `,
+
+    options: [
+      "B шамасы үлкен",
+      "Шамаларды салыстыру мүмкін емес",
+      "A = B",
+      "A шамасы үлкен"
+    ],
+
+    correct: 2,
+
+    explanation:
+      "Бірінші есептен y = 340/7 шығады. Екінші теңдеуде (7x + 560) / 6 = 150, бұдан 7x = 340 және x = 340/7. Сондықтан екі шама тең.",
+
+    keyFact:
+      "A = 340/7 және B = 340/7, сондықтан A = B."
+  },
+
+  {
+    number: 2,
+
+    question:
+      "Теңсіздіктің шешімін табыңыз:",
+
+    visual: `
+      <div class="visual-box math">
+        (√x³ − 6)(√x³ + 6) ≥ 180
+      </div>
+    `,
+
+    options: [
+      "(−6; +∞]",
+      "[−6; +∞)",
+      "(6; +∞)",
+      "[6; +∞)",
+      "(−∞; 8)"
+    ],
+
+    correct: 3,
+
+    explanation:
+      "Қысқаша көбейту формуласын қолданамыз: (√x³ − 6)(√x³ + 6) = x³ − 36. Сонда x³ − 36 ≥ 180, яғни x³ ≥ 216. Осыдан x ≥ 6.",
+
+    keyFact:
+      "Теңсіздіктің шешімі: [6; +∞)."
+  },
+
+  {
+    number: 3,
+
+    question:
+      "Егер |8x − 4| > 5 және x < 1 болса, x-тің қабылдайтын мәнін табыңыз.",
+
+    options: [
+      "0,8",
+      "0,5",
+      "0",
+      "0,4",
+      "−0,4"
+    ],
+
+    correct: 4,
+
+    explanation:
+      "|8x − 4| > 5 теңсіздігін екі жағдайға бөлеміз: 8x − 4 > 5 немесе 8x − 4 < −5. Бұдан x > 9/8 немесе x < −1/8. x < 1 шарты бойынша x < −1/8. Берілген нұсқалардан −0,4 сәйкес келеді.",
+
+    keyFact:
+      "Дұрыс мән: x = −0,4."
+  },
+    {
+    number: 4,
+
+    question:
+      "Егер b > a және M < a болса, келесі тұжырымдардың арасындағы дұрыс тұжырымды табыңыз.",
+
+    options: [
+      "b − M = −1",
+      "b − a = −1",
+      "a − b = 1",
+      "M − a = 1",
+      "b − M = 1"
+    ],
+
+    correct: 4,
+
+    explanation:
+      "Берілген шарт бойынша M < a < b. Сондықтан b − M айырмасы оң сан болуы керек. Алғашқы төрт нұсқа берілген ретке қайшы. Тек b − M = 1 теңдігі мүмкін.",
+
+    keyFact:
+      "M < a < b болғандықтан, b − M > 0."
+  },
+
+  {
+    number: 5,
+
+    question:
+      "Егер m және n оң бүтін сандар үшін 2¹⁸ · 3ᵐ = 12ⁿ теңдігі орындалса, m санының мәнін табыңыз.",
+
+    options: [
+      "16",
+      "18",
+      "4",
+      "8",
+      "9"
+    ],
+
+    correct: 4,
+
+    explanation:
+      "12ⁿ = (2² · 3)ⁿ = 2²ⁿ · 3ⁿ. Дәрежелерді салыстырамыз: 2n = 18, сондықтан n = 9. Ал m = n болғандықтан, m = 9.",
+
+    keyFact:
+      "2n = 18 және m = n, сондықтан m = 9."
+  },
+
+  {
+    number: 6,
+
+    question:
+      "ABCD тіктөртбұрышы берілген. Боялған фигураның ауданын табыңыз.",
+
+    visual: `
+      <div class="visual-box">
+
+        <svg
+          viewBox="0 0 650 340"
+          role="img"
+          aria-label="Тіктөртбұрыш ішіндегі боялған фигура"
+        >
+          <defs>
+            <pattern
+              id="dots6"
+              width="12"
+              height="12"
+              patternUnits="userSpaceOnUse"
+            >
+              <circle
+                cx="3"
+                cy="3"
+                r="2.2"
+                fill="#64748b"
+              />
+
+              <circle
+                cx="9"
+                cy="9"
+                r="2.2"
+                fill="#64748b"
+              />
+            </pattern>
+          </defs>
+
+          <rect
+            x="90"
+            y="55"
+            width="460"
+            height="230"
+            fill="none"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <polygon
+            points="90,225 410,55 550,55 90,285"
+            fill="url(#dots6)"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <text x="72" y="48" font-size="21">A</text>
+          <text x="560" y="48" font-size="21">B</text>
+          <text x="560" y="310" font-size="21">C</text>
+          <text x="72" y="310" font-size="21">D</text>
+
+          <text x="404" y="47" font-size="21">F</text>
+          <text x="68" y="225" font-size="21">E</text>
+
+          <text x="245" y="43" font-size="22">8</text>
+          <text x="475" y="43" font-size="22">3</text>
+
+          <text x="52" y="145" font-size="22">6</text>
+          <text x="52" y="265" font-size="22">2</text>
+        </svg>
+
+      </div>
+    `,
+
+    options: [
+      "19",
+      "21",
+      "16",
+      "23",
+      "20"
+    ],
+
+    correct: 4,
+
+    explanation:
+      "Тіктөртбұрыштың өлшемдері мен ішіндегі үшбұрыштардың аудандарын пайдаланып, боялған бөліктің ауданын табамыз. Есептеу нәтижесі 20-ға тең.",
+
+    keyFact:
+      "Боялған фигураның ауданы: 20."
+  },
+    {
+    number: 7,
+
+    question:
+      "A және B шамаларын салыстырыңыз.",
+
+    visual: `
+      <div class="comparison-grid">
+
+        <div class="comparison-cell">
+
+          <span class="comparison-title">
+            A шамасы
+          </span>
+
+          <div class="math">
+            2023 / 2022
+          </div>
+
+        </div>
+
+        <div class="comparison-cell">
+
+          <span class="comparison-title">
+            B шамасы
+          </span>
+
+          <div class="math">
+            2024 / 2023
+          </div>
+
+        </div>
+
+      </div>
+    `,
+
+    options: [
+      "A = B",
+      "B шамасы үлкен",
+      "Шамаларды салыстыру мүмкін емес",
+      "A шамасы үлкен"
+    ],
+
+    correct: 3,
+
+    explanation:
+      "2023/2022 = 1 + 1/2022, ал 2024/2023 = 1 + 1/2023. 1/2022 саны 1/2023 санынан үлкен, сондықтан A шамасы үлкен.",
+
+    keyFact:
+      "2023/2022 > 2024/2023."
+  },
+
+  {
+    number: 8,
+
+    question:
+      "Суреттегі a° бұрышының мәнін табыңыз.",
+
+    visual: `
+      <div class="visual-box">
+
+        <svg
+          viewBox="0 0 520 520"
+          role="img"
+          aria-label="Бес секторға бөлінген дөңгелек"
+        >
+          <circle
+            cx="260"
+            cy="260"
+            r="205"
+            fill="none"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <line
+            x1="260"
+            y1="260"
+            x2="235"
+            y2="56"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <line
+            x1="260"
+            y1="260"
+            x2="462"
+            y2="260"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <line
+            x1="260"
+            y1="260"
+            x2="335"
+            y2="450"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <line
+            x1="260"
+            y1="260"
+            x2="110"
+            y2="405"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <line
+            x1="260"
+            y1="260"
+            x2="72"
+            y2="175"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <text x="170" y="205" font-size="25">
+            a°
+          </text>
+
+          <text x="300" y="190" font-size="23">
+            b° − a°/2
+          </text>
+
+          <text x="305" y="300" font-size="23">
+            a°/2 + 2b°
+          </text>
+
+          <text x="170" y="355" font-size="23">
+            2a° − 2b°
+          </text>
+
+          <text x="83" y="280" font-size="23">
+            2a° − b°
+          </text>
+
+          <text x="247" y="283" font-size="22">
+            O
+          </text>
+        </svg>
+
+      </div>
+    `,
+
+    options: [
+      "72°",
+      "70°",
+      "62°",
+      "60°",
+      "75°"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Орталықтағы барлық бұрыштардың қосындысы 360° болады: a + (b − a/2) + (a/2 + 2b) + (2a − 2b) + (2a − b) = 360. Ұқсас мүшелерді біріктірсек, 5a = 360, сондықтан a = 72°.",
+
+    keyFact:
+      "Дөңгелек айналасындағы бұрыштардың қосындысы 360°, сондықтан a = 72°."
+  },
+
+  {
+    number: 9,
+
+    question:
+      "Диаграммада барлығы 500 түп ағаш отырғызылған саябақ көрсетілген. Қарағай ағашының санын табыңыз.",
+
+    visual: `
+      <div class="visual-box">
+
+        <svg
+          viewBox="0 0 650 400"
+          role="img"
+          aria-label="Ағаштар үлесі көрсетілген дөңгелек диаграмма"
+        >
+          <path
+            d="M270,200 L270,60
+               A140,140 0 0,1 408,168 Z"
+            fill="#60a5fa"
+            stroke="#ffffff"
+            stroke-width="4"
+          />
+
+          <path
+            d="M270,200 L408,168
+               A140,140 0 0,1 270,340 Z"
+            fill="#f87171"
+            stroke="#ffffff"
+            stroke-width="4"
+          />
+
+          <path
+            d="M270,200 L270,340
+               A140,140 0 0,1 133,170 Z"
+            fill="#a3e635"
+            stroke="#ffffff"
+            stroke-width="4"
+          />
+
+          <path
+            d="M270,200 L133,170
+               A140,140 0 0,1 270,60 Z"
+            fill="#a78bfa"
+            stroke="#ffffff"
+            stroke-width="4"
+          />
+
+          <text x="315" y="115" font-size="22">
+            23%
+          </text>
+
+          <text x="335" y="260" font-size="22">
+            25%
+          </text>
+
+          <text x="175" y="285" font-size="22">
+            27%
+          </text>
+
+          <text x="170" y="125" font-size="22">
+            25%
+          </text>
+
+          <rect
+            x="470"
+            y="105"
+            width="20"
+            height="20"
+            fill="#60a5fa"
+          />
+
+          <text x="500" y="122" font-size="20">
+            Қарағай
+          </text>
+
+          <rect
+            x="470"
+            y="145"
+            width="20"
+            height="20"
+            fill="#f87171"
+          />
+
+          <text x="500" y="162" font-size="20">
+            Қайың
+          </text>
+
+          <rect
+            x="470"
+            y="185"
+            width="20"
+            height="20"
+            fill="#a3e635"
+          />
+
+          <text x="500" y="202" font-size="20">
+            Емен
+          </text>
+
+          <rect
+            x="470"
+            y="225"
+            width="20"
+            height="20"
+            fill="#a78bfa"
+          />
+
+          <text x="500" y="242" font-size="20">
+            Басқа ағаштар
+          </text>
+        </svg>
+
+      </div>
+    `,
+
+    options: [
+      "105",
+      "115",
+      "95",
+      "125",
+      "135"
+    ],
+
+    correct: 1,
+
+    explanation:
+      "Диаграмма бойынша қарағай барлық ағаштың 23%-ын құрайды. 500 · 23/100 = 115.",
+
+    keyFact:
+      "Қарағай саны: 115."
+  },
+    {
+    number: 10,
+
+    question:
+      "Егер b < a және D < b болса, келесі тұжырымдардың арасындағы дұрыс тұжырымды табыңыз.",
+
+    options: [
+      "b − D = 3",
+      "a − b = −3",
+      "D − b = 2",
+      "a − D = −2",
+      "b − a = 1"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "Берілген шарт бойынша D < b < a. Сондықтан b − D айырмасы оң сан болады. Қалған нұсқалардағы айырмалардың таңбалары шартқа қайшы.",
+
+    keyFact:
+      "D < b болғандықтан, b − D > 0."
+  },
+
+  {
+    number: 11,
+
+    question:
+      "Егер c > a және K < a болса, келесі тұжырымдардың арасындағы жалған тұжырымды табыңыз.",
+
+    options: [
+      "c + K = 5",
+      "a − c = 1",
+      "K − c = −1",
+      "c − K = 10",
+      "a − c = −5"
+    ],
+
+    correct: 1,
+
+    explanation:
+      "c > a болғандықтан, a − c міндетті түрде теріс сан болуы керек. Сондықтан a − c = 1 теңдігі жалған.",
+
+    keyFact:
+      "c > a болса, a − c < 0."
+  },
+
+  {
+    number: 12,
+
+    question:
+      "AB және CD — диаметр болса, x° бұрышының мәнін табыңыз.",
+
+    visual: `
+      <div class="visual-box">
+
+        <svg
+          viewBox="0 0 560 560"
+          role="img"
+          aria-label="Екі диаметрі бар шеңбер"
+        >
+          <circle
+            cx="280"
+            cy="280"
+            r="180"
+            fill="none"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <line
+            x1="100"
+            y1="225"
+            x2="460"
+            y2="335"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <line
+            x1="245"
+            y1="458"
+            x2="315"
+            y2="102"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <line
+            x1="100"
+            y1="225"
+            x2="245"
+            y2="458"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <line
+            x1="315"
+            y1="102"
+            x2="460"
+            y2="335"
+            stroke="#111827"
+            stroke-width="3"
+          />
+
+          <text x="78" y="230" font-size="22">
+            A
+          </text>
+
+          <text x="465" y="340" font-size="22">
+            B
+          </text>
+
+          <text x="230" y="485" font-size="22">
+            C
+          </text>
+
+          <text x="315" y="95" font-size="22">
+            D
+          </text>
+
+          <text x="285" y="300" font-size="22">
+            O
+          </text>
+
+          <text x="140" y="275" font-size="23">
+            32°
+          </text>
+
+          <text x="275" y="88" font-size="23">
+            x°
+          </text>
+        </svg>
+
+      </div>
+    `,
+
+    options: [
+      "16°",
+      "32°",
+      "36°",
+      "13°",
+      "58°"
+    ],
+
+    correct: 1,
+
+    explanation:
+      "32° бұрышы мен x° бұрышы бір доғаға тірелген шеңберге іштей сызылған бұрыштар. Бір доғаға тірелген іштей сызылған бұрыштар өзара тең.",
+
+    keyFact:
+      "x = 32°."
+  },
+    {
+    number: 13,
+
+    question:
+      "Теңсіздіктің шешімін табыңыз:",
+
+    visual: `
+      <div class="visual-box math">
+        (y + 6)(y − 6) < 64
+      </div>
+    `,
+
+    options: [
+      "(−10; 10]",
+      "(−∞; −10) ∪ (10; +∞)",
+      "(−10; 10)",
+      "(−∞; −10] ∪ [10; +∞)",
+      "[−10; 10)"
+    ],
+
+    correct: 2,
+
+    explanation:
+      "(y + 6)(y − 6) < 64 теңсіздігін ашамыз: y² − 36 < 64. Осыдан y² < 100, демек −10 < y < 10.",
+
+    keyFact:
+      "Теңсіздіктің шешімі: (−10; 10)."
+  },
+
+  {
+    number: 14,
+
+    question:
+      "A және B шамаларын салыстырыңыз.",
+
+    visual: `
+      <div class="comparison-grid">
+
+        <div class="comparison-cell">
+
+          <span class="comparison-title">
+            A шамасы
+          </span>
+
+          <div class="math">
+            7x − 49 = 343
+          </div>
+
+          <div>
+            теңдеуінің шешімі
+          </div>
+
+        </div>
+
+        <div class="comparison-cell">
+
+          <span class="comparison-title">
+            B шамасы
+          </span>
+
+          <div class="math">
+            (24 + 2x) / 4 = 7
+          </div>
+
+          <div>
+            теңдеуінің шешімі
+          </div>
+
+        </div>
+
+      </div>
+    `,
+
+    options: [
+      "A шамасы үлкен",
+      "A = B",
+      "B шамасы үлкен",
+      "Шамаларды салыстыру мүмкін емес"
+    ],
+
+    correct: 0,
+
+    explanation:
+      "A шамасы үшін: 7x − 49 = 343, бұдан 7x = 392 және x = 56. B шамасы үшін: (24 + 2x) / 4 = 7, бұдан 24 + 2x = 28 және x = 2. Сондықтан A шамасы үлкен.",
+
+    keyFact:
+      "A = 56, B = 2. Демек, A шамасы үлкен."
+  },
+
+  {
+    number: 15,
+
+    question:
+      "Егер m және n оң бүтін сандар үшін 2¹⁸ · 5ᵐ = 20ⁿ теңдігі орындалса, m санының мәнін табыңыз.",
+
+    options: [
+      "16",
+      "4",
+      "9",
+      "18",
+      "8"
+    ],
+
+    correct: 2,
+
+    explanation:
+      "20ⁿ = (2² · 5)ⁿ = 2²ⁿ · 5ⁿ. Дәрежелерді салыстырамыз: 2n = 18, сондықтан n = 9. Ал m = n болғандықтан, m = 9.",
+
+    keyFact:
+      "m = 9."
+  }
+
+];
+  
