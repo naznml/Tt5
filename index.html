@@ -489,6 +489,28 @@ header p {
     flex-direction: column-reverse;
   }
 }
+
+.solution-steps {
+  margin: 0;
+  padding-left: 24px;
+}
+
+.solution-steps li {
+  margin-bottom: 9px;
+}
+
+.solution-steps li:last-child {
+  margin-bottom: 0;
+}
+
+.solution-formula {
+  display: block;
+  margin-top: 5px;
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 19px;
+  font-weight: 700;
+}
+
 </style>
 </head>
 <body>
@@ -637,35 +659,67 @@ const criticalQuestions = [
       <div class="comparison-grid">
 
         <div class="comparison-cell">
+          <span class="comparison-title">A шамасы</span>
 
-          <span class="comparison-title">
-            A шамасы
-          </span>
+          <svg
+            viewBox="0 0 520 310"
+            role="img"
+            aria-label="m және n параллель түзулері, ABC үшбұрышы, 4x, 3x, 50 градус және y бұрышы"
+          >
+            <line x1="35" y1="45" x2="485" y2="45"
+              stroke="#111827" stroke-width="3"/>
+            <line x1="35" y1="235" x2="485" y2="235"
+              stroke="#111827" stroke-width="3"/>
+
+            <line x1="150" y1="235" x2="255" y2="45"
+              stroke="#111827" stroke-width="3"/>
+            <line x1="255" y1="45" x2="350" y2="235"
+              stroke="#111827" stroke-width="3"/>
+
+            <path d="M150 235 A34 34 0 0 0 126 204"
+              fill="none" stroke="#2563eb" stroke-width="2.5"/>
+            <path d="M350 235 A34 34 0 0 1 374 204"
+              fill="none" stroke="#2563eb" stroke-width="2.5"/>
+            <path d="M255 45 A33 33 0 0 0 225 63"
+              fill="none" stroke="#2563eb" stroke-width="2.5"/>
+            <path d="M255 45 A44 44 0 0 0 243 87"
+              fill="none" stroke="#2563eb" stroke-width="2.5"/>
+
+            <text x="247" y="31" font-size="21" font-weight="700">B</text>
+            <text x="140" y="261" font-size="21" font-weight="700">A</text>
+            <text x="343" y="261" font-size="21" font-weight="700">C</text>
+
+            <text x="90" y="213" font-size="27">4x</text>
+            <text x="374" y="213" font-size="27">3x</text>
+            <text x="248" y="113" font-size="27">50°</text>
+            <text x="211" y="74" font-size="25">y°</text>
+
+            <text x="491" y="51" font-size="20" font-style="italic">m</text>
+            <text x="491" y="241" font-size="20" font-style="italic">n</text>
+          </svg>
 
           <div class="math">
-            y бұрышының мәні
+            <i>m</i> және <i>n</i> параллель болса,
+            <i>y</i> бұрышының мәні
           </div>
-
-          <div>
-            m және n түзулері параллель
-          </div>
-
         </div>
 
         <div class="comparison-cell">
+          <span class="comparison-title">B шамасы</span>
 
-          <span class="comparison-title">
-            B шамасы
-          </span>
-
-          <div class="math">
-            (7x + 560) / 6 = 150
+          <div class="math" style="font-size:26px; margin-top:45px;">
+            <span style="display:inline-block; border-bottom:2px solid #111827; padding:0 8px 4px;">
+              7x + 560
+            </span>
+            <span style="display:block; margin-top:2px;">6</span>
+            <span style="display:inline-block; margin-left:120px; margin-top:-48px; vertical-align:top;">
+              = 150
+            </span>
           </div>
 
-          <div>
-            теңдеуінің шешімі
+          <div style="margin-top:20px; font-size:20px;">
+            Теңдеуінің шешімі
           </div>
-
         </div>
 
       </div>
@@ -681,7 +735,22 @@ const criticalQuestions = [
     correct: 2,
 
     explanation:
-      "Бірінші есептен y = 340/7 шығады. Екінші теңдеуде (7x + 560) / 6 = 150, бұдан 7x = 340 және x = 340/7. Сондықтан екі шама тең.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> Үшбұрыштың A және C төбелеріндегі ішкі бұрыштарды сыртқы бұрыштар арқылы өрнектейміз:
+<span class="solution-formula">∠A = 180° − 4x, &nbsp; ∠C = 180° − 3x.</span></li>
+<li><b>2-қадам.</b> Үшбұрыш бұрыштарының қосындысы 180°:
+<span class="solution-formula">(180° − 4x) + 50° + (180° − 3x) = 180°.</span>
+Осыдан <span class="solution-formula">410° − 7x = 180° → 7x = 230° → x = 230/7.</span></li>
+<li><b>3-қадам.</b> m ∥ n болғандықтан, y мен 4x — біржақты ішкі бұрыштар:
+<span class="solution-formula">y + 4x = 180°.</span>
+Сондықтан <span class="solution-formula">y = 180° − 4 · 230/7 = 340/7.</span>
+Демек, <b>A шамасы = 340/7</b>.</li>
+<li><b>4-қадам.</b> B шамасындағы теңдеуді шешеміз:
+<span class="solution-formula">(7x + 560)/6 = 150 → 7x + 560 = 900 → 7x = 340 → x = 340/7.</span></li>
+<li><b>5-қадам.</b> Екі шаманы салыстырамыз:
+<span class="solution-formula">A = 340/7, &nbsp; B = 340/7.</span>
+Сондықтан <b>A = B</b>.</li>
+</ol>`,
 
     keyFact:
       "A = 340/7 және B = 340/7, сондықтан A = B."
@@ -710,7 +779,16 @@ const criticalQuestions = [
     correct: 3,
 
     explanation:
-      "Қысқаша көбейту формуласын қолданамыз: (√x³ − 6)(√x³ + 6) = x³ − 36. Сонда x³ − 36 ≥ 180, яғни x³ ≥ 216. Осыдан x ≥ 6.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> Көбейткіштерді қысқаша көбейту формуласы бойынша ашамыз:
+<span class="solution-formula">(a − b)(a + b) = a² − b².</span></li>
+<li><b>2-қадам.</b>
+<span class="solution-formula">(√x³ − 6)(√x³ + 6) = x³ − 36.</span></li>
+<li><b>3-қадам.</b> Теңсіздікті шешеміз:
+<span class="solution-formula">x³ − 36 ≥ 180 → x³ ≥ 216 → x ≥ 6.</span></li>
+<li><b>4-қадам.</b> 6 саны теңсіздікке кіреді, сондықтан жауап:
+<span class="solution-formula">[6; +∞).</span></li>
+</ol>`,
 
     keyFact:
       "Теңсіздіктің шешімі: [6; +∞)."
@@ -733,7 +811,17 @@ const criticalQuestions = [
     correct: 4,
 
     explanation:
-      "|8x − 4| > 5 теңсіздігін екі жағдайға бөлеміз: 8x − 4 > 5 немесе 8x − 4 < −5. Бұдан x > 9/8 немесе x < −1/8. x < 1 шарты бойынша x < −1/8. Берілген нұсқалардан −0,4 сәйкес келеді.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> Модульді екі жағдайға бөлеміз:
+<span class="solution-formula">8x − 4 &gt; 5 немесе 8x − 4 &lt; −5.</span></li>
+<li><b>2-қадам.</b> Бірінші жағдай:
+<span class="solution-formula">8x &gt; 9 → x &gt; 9/8.</span></li>
+<li><b>3-қадам.</b> Екінші жағдай:
+<span class="solution-formula">8x &lt; −1 → x &lt; −1/8.</span></li>
+<li><b>4-қадам.</b> Қосымша шарт x &lt; 1 болғандықтан, x &gt; 9/8 тармағы жарамайды. Қалады:
+<span class="solution-formula">x &lt; −1/8.</span></li>
+<li><b>5-қадам.</b> Нұсқаларды тексерсек, тек <b>−0,4</b> саны −1/8-ден кіші.</li>
+</ol>`,
 
     keyFact:
       "Дұрыс мән: x = −0,4."
@@ -755,7 +843,14 @@ const criticalQuestions = [
     correct: 4,
 
     explanation:
-      "Берілген шарт бойынша M < a < b. Сондықтан b − M айырмасы оң сан болуы керек. Алғашқы төрт нұсқа берілген ретке қайшы. Тек b − M = 1 теңдігі мүмкін.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> Берілгендерді бір тізбекке орналастырамыз:
+<span class="solution-formula">M &lt; a &lt; b.</span></li>
+<li><b>2-қадам.</b> Сондықтан b − M айырмасы міндетті түрде оң болады:
+<span class="solution-formula">b − M &gt; 0.</span></li>
+<li><b>3-қадам.</b> Нұсқаларды салыстырамыз. A, B, C және D нұсқалары берілген ретке қайшы. Оң айырма көрсетілген жалғыз нұсқа:
+<span class="solution-formula">b − M = 1.</span></li>
+</ol>`,
 
     keyFact:
       "M < a < b болғандықтан, b − M > 0."
@@ -778,7 +873,16 @@ const criticalQuestions = [
     correct: 4,
 
     explanation:
-      "12ⁿ = (2² · 3)ⁿ = 2²ⁿ · 3ⁿ. Дәрежелерді салыстырамыз: 2n = 18, сондықтан n = 9. Ал m = n болғандықтан, m = 9.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> 12 санын жай көбейткіштерге жіктейміз:
+<span class="solution-formula">12 = 2² · 3.</span></li>
+<li><b>2-қадам.</b> Оң жақты дәрежеге шығарамыз:
+<span class="solution-formula">12ⁿ = (2² · 3)ⁿ = 2²ⁿ · 3ⁿ.</span></li>
+<li><b>3-қадам.</b> 2 негізінің дәрежелерін теңестіреміз:
+<span class="solution-formula">2n = 18 → n = 9.</span></li>
+<li><b>4-қадам.</b> 3 негізінің дәрежелерінен:
+<span class="solution-formula">m = n = 9.</span></li>
+</ol>`,
 
     keyFact:
       "2n = 18 және m = n, сондықтан m = 9."
@@ -867,7 +971,18 @@ const criticalQuestions = [
     correct: 4,
 
     explanation:
-      "Тіктөртбұрыштың өлшемдері мен ішіндегі үшбұрыштардың аудандарын пайдаланып, боялған бөліктің ауданын табамыз. Есептеу нәтижесі 20-ға тең.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> Тіктөртбұрыштың өлшемдерін табамыз:
+<span class="solution-formula">AB = 8 + 3 = 11, &nbsp; AD = 6 + 2 = 8.</span></li>
+<li><b>2-қадам.</b> Тіктөртбұрыштың ауданы:
+<span class="solution-formula">S<sub>ABCD</sub> = 11 · 8 = 88.</span></li>
+<li><b>3-қадам.</b> Боялмаған жоғарғы сол жақ үшбұрыш:
+<span class="solution-formula">S<sub>AEF</sub> = 1/2 · 6 · 8 = 24.</span></li>
+<li><b>4-қадам.</b> Боялмаған төменгі оң жақ үшбұрыштың катеттері DC = 11 және BC = 8:
+<span class="solution-formula">S<sub>DBC</sub> = 1/2 · 11 · 8 = 44.</span></li>
+<li><b>5-қадам.</b> Боялған аудан:
+<span class="solution-formula">88 − 24 − 44 = 20.</span></li>
+</ol>`,
 
     keyFact:
       "Боялған фигураның ауданы: 20."
@@ -918,7 +1033,17 @@ const criticalQuestions = [
     correct: 3,
 
     explanation:
-      "2023/2022 = 1 + 1/2022, ал 2024/2023 = 1 + 1/2023. 1/2022 саны 1/2023 санынан үлкен, сондықтан A шамасы үлкен.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> Бөлшектерді аралас түрде жазамыз:
+<span class="solution-formula">2023/2022 = 1 + 1/2022.</span></li>
+<li><b>2-қадам.</b>
+<span class="solution-formula">2024/2023 = 1 + 1/2023.</span></li>
+<li><b>3-қадам.</b> Бөлім неғұрлым кіші болса, бірлік бөлшек соғұрлым үлкен:
+<span class="solution-formula">1/2022 &gt; 1/2023.</span></li>
+<li><b>4-қадам.</b> Сондықтан:
+<span class="solution-formula">2023/2022 &gt; 2024/2023.</span>
+Демек, <b>A шамасы үлкен</b>.</li>
+</ol>`,
 
     keyFact:
       "2023/2022 > 2024/2023."
@@ -1031,7 +1156,15 @@ const criticalQuestions = [
     correct: 0,
 
     explanation:
-      "Орталықтағы барлық бұрыштардың қосындысы 360° болады: a + (b − a/2) + (a/2 + 2b) + (2a − 2b) + (2a − b) = 360. Ұқсас мүшелерді біріктірсек, 5a = 360, сондықтан a = 72°.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> Толық шеңбердің орталық бұрыштарының қосындысы 360°.</li>
+<li><b>2-қадам.</b> Суреттегі бес бұрышты қосамыз:
+<span class="solution-formula">a + (b − a/2) + (a/2 + 2b) + (2a − 2b) + (2a − b) = 360°.</span></li>
+<li><b>3-қадам.</b> Ұқсас мүшелерді біріктіреміз. b мүшелері қысқарады:
+<span class="solution-formula">5a = 360°.</span></li>
+<li><b>4-қадам.</b>
+<span class="solution-formula">a = 360° / 5 = 72°.</span></li>
+</ol>`,
 
     keyFact:
       "Дөңгелек айналасындағы бұрыштардың қосындысы 360°, сондықтан a = 72°."
@@ -1162,7 +1295,15 @@ const criticalQuestions = [
     correct: 1,
 
     explanation:
-      "Диаграмма бойынша қарағай барлық ағаштың 23%-ын құрайды. 500 · 23/100 = 115.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> Диаграммадан қарағайдың үлесін анықтаймыз:
+<span class="solution-formula">23%.</span></li>
+<li><b>2-қадам.</b> 500 ағаштың 23%-ын есептейміз:
+<span class="solution-formula">500 · 23/100.</span></li>
+<li><b>3-қадам.</b>
+<span class="solution-formula">500 · 0,23 = 115.</span></li>
+<li><b>4-қадам.</b> Қарағай ағашының саны — <b>115</b>.</li>
+</ol>`,
 
     keyFact:
       "Қарағай саны: 115."
@@ -1184,7 +1325,14 @@ const criticalQuestions = [
     correct: 0,
 
     explanation:
-      "Берілген шарт бойынша D < b < a. Сондықтан b − D айырмасы оң сан болады. Қалған нұсқалардағы айырмалардың таңбалары шартқа қайшы.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> Берілген теңсіздіктерді бір тізбекке келтіреміз:
+<span class="solution-formula">D &lt; b &lt; a.</span></li>
+<li><b>2-қадам.</b> D саны b-дан кіші, сондықтан:
+<span class="solution-formula">b − D &gt; 0.</span></li>
+<li><b>3-қадам.</b> Қалған нұсқалардағы айырмалардың таңбалары шартқа қайшы. Оң айырма берілген нұсқа:
+<span class="solution-formula">b − D = 3.</span></li>
+</ol>`,
 
     keyFact:
       "D < b болғандықтан, b − D > 0."
@@ -1207,7 +1355,14 @@ const criticalQuestions = [
     correct: 1,
 
     explanation:
-      "c > a болғандықтан, a − c міндетті түрде теріс сан болуы керек. Сондықтан a − c = 1 теңдігі жалған.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> Берілгендерді ретімен жазамыз:
+<span class="solution-formula">K &lt; a &lt; c.</span></li>
+<li><b>2-қадам.</b> c саны a-дан үлкен болғандықтан:
+<span class="solution-formula">a − c &lt; 0.</span></li>
+<li><b>3-қадам.</b> Ал B нұсқасында a − c = 1, яғни оң сан деп берілген. Бұл шартқа қайшы.</li>
+<li><b>4-қадам.</b> Сондықтан жалған тұжырым — <b>a − c = 1</b>.</li>
+</ol>`,
 
     keyFact:
       "c > a болса, a − c < 0."
@@ -1315,7 +1470,13 @@ const criticalQuestions = [
     correct: 1,
 
     explanation:
-      "32° бұрышы мен x° бұрышы бір доғаға тірелген шеңберге іштей сызылған бұрыштар. Бір доғаға тірелген іштей сызылған бұрыштар өзара тең.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> ∠CAB = 32° — шеңберге іштей сызылған бұрыш.</li>
+<li><b>2-қадам.</b> Бұл бұрыш CB доғасына тіреледі.</li>
+<li><b>3-қадам.</b> D нүктесіндегі x° бұрышы да дәл сол CB доғасына тіреледі.</li>
+<li><b>4-қадам.</b> Бір доғаға тірелетін іштей сызылған бұрыштар тең:
+<span class="solution-formula">x = 32°.</span></li>
+</ol>`,
 
     keyFact:
       "x = 32°."
@@ -1343,7 +1504,18 @@ const criticalQuestions = [
     correct: 2,
 
     explanation:
-      "(y + 6)(y − 6) < 64 теңсіздігін ашамыз: y² − 36 < 64. Осыдан y² < 100, демек −10 < y < 10.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> Көбейтіндіні ашамыз:
+<span class="solution-formula">(y + 6)(y − 6) = y² − 36.</span></li>
+<li><b>2-қадам.</b>
+<span class="solution-formula">y² − 36 &lt; 64.</span></li>
+<li><b>3-қадам.</b> 36-ны оң жаққа өткіземіз:
+<span class="solution-formula">y² &lt; 100.</span></li>
+<li><b>4-қадам.</b>
+<span class="solution-formula">−10 &lt; y &lt; 10.</span></li>
+<li><b>5-қадам.</b> Шекаралар кірмейді, сондықтан жауап:
+<span class="solution-formula">(−10; 10).</span></li>
+</ol>`,
 
     keyFact:
       "Теңсіздіктің шешімі: (−10; 10)."
@@ -1403,7 +1575,15 @@ const criticalQuestions = [
     correct: 0,
 
     explanation:
-      "A шамасы үшін: 7x − 49 = 343, бұдан 7x = 392 және x = 56. B шамасы үшін: (24 + 2x) / 4 = 7, бұдан 24 + 2x = 28 және x = 2. Сондықтан A шамасы үлкен.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> A шамасының теңдеуін шешеміз:
+<span class="solution-formula">7x − 49 = 343 → 7x = 392 → x = 56.</span></li>
+<li><b>2-қадам.</b> B шамасының теңдеуін шешеміз:
+<span class="solution-formula">(24 + 2x)/4 = 7 → 24 + 2x = 28 → 2x = 4 → x = 2.</span></li>
+<li><b>3-қадам.</b> Салыстырамыз:
+<span class="solution-formula">56 &gt; 2.</span></li>
+<li><b>4-қадам.</b> Демек, <b>A шамасы үлкен</b>.</li>
+</ol>`,
 
     keyFact:
       "A = 56, B = 2. Демек, A шамасы үлкен."
@@ -1426,7 +1606,16 @@ const criticalQuestions = [
     correct: 2,
 
     explanation:
-      "20ⁿ = (2² · 5)ⁿ = 2²ⁿ · 5ⁿ. Дәрежелерді салыстырамыз: 2n = 18, сондықтан n = 9. Ал m = n болғандықтан, m = 9.",
+      `<ol class="solution-steps">
+<li><b>1-қадам.</b> 20 санын жай көбейткіштерге жіктейміз:
+<span class="solution-formula">20 = 2² · 5.</span></li>
+<li><b>2-қадам.</b>
+<span class="solution-formula">20ⁿ = (2² · 5)ⁿ = 2²ⁿ · 5ⁿ.</span></li>
+<li><b>3-қадам.</b> 2 негізінің дәреже көрсеткіштерін теңестіреміз:
+<span class="solution-formula">2n = 18 → n = 9.</span></li>
+<li><b>4-қадам.</b> 5 негізінің дәреже көрсеткіштерінен:
+<span class="solution-formula">m = n = 9.</span></li>
+</ol>`,
 
     keyFact:
       "m = 9."
@@ -2384,6 +2573,10 @@ function showResults(
     explanation.style.display =
       "block";
 
+    card.querySelectorAll("input").forEach(input => {
+      input.disabled = true;
+    });
+
   });
 
   document.getElementById(
@@ -2421,16 +2614,75 @@ function showAnalyticalResults(){
 
 }
 
+
+function resetSection(
+  questions,
+  quizId,
+  resultId,
+  scoreId,
+  progressTextId,
+  progressBarId
+){
+  const quiz = document.getElementById(quizId);
+
+  quiz.querySelectorAll("input").forEach(input => {
+    input.checked = false;
+    input.disabled = false;
+  });
+
+  quiz.querySelectorAll(".option").forEach(option => {
+    option.classList.remove("correct", "wrong");
+  });
+
+  quiz.querySelectorAll(".question").forEach(card => {
+    card.classList.remove("checked");
+
+    const explanation = card.querySelector(".explanation");
+    const scoreBlock = card.querySelector(".question-score");
+
+    if (explanation) {
+      explanation.style.display = "";
+    }
+
+    if (scoreBlock) {
+      scoreBlock.className = "question-score";
+      scoreBlock.textContent = "";
+    }
+  });
+
+  document.getElementById(resultId).classList.remove("show");
+  document.getElementById(scoreId).textContent =
+    "0 / " + questions.length;
+  document.getElementById(progressTextId).textContent =
+    "0 / " + questions.length;
+  document.getElementById(progressBarId).style.width = "0%";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
 function resetCriticalTest(){
-
-  location.reload();
-
+  resetSection(
+    criticalQuestions,
+    "criticalQuiz",
+    "criticalResult",
+    "criticalScore",
+    "criticalProgressText",
+    "criticalProgressBar"
+  );
 }
 
 function resetAnalyticalTest(){
-
-  location.reload();
-
+  resetSection(
+    analyticalQuestions,
+    "analyticalQuiz",
+    "analyticalResult",
+    "analyticalScore",
+    "analyticalProgressText",
+    "analyticalProgressBar"
+  );
 }
 
 createAnalyticalSection();
